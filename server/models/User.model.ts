@@ -45,6 +45,10 @@ const userSchema: Schema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  isActive: {
+    type: Boolean,
+    default: false,
+  },
 
   // Maybe move this to Token schema if I create one later
   resetPasswordToken: String,
