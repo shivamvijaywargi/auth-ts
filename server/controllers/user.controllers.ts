@@ -41,7 +41,45 @@ export const registerUser = asyncHandler(
 
 export const loginUser = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    res.send('Login user');
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return next(
+        new ErrorHandler('Email and password does not match or exist.', 400)
+      );
+    }
+
+    const user = await User.findOne({ email }).select('+password');
+
+    if (!user) {
+      return next(
+        new ErrorHandler('Email and password does not match or exist.', 400)
+      );
+    }
+
+    const isPasswordMatched = await user.comparePassword(password);
+
+    if (!isPasswordMatched) {
+      return next(new ErrorHandler('Email and password does not match.', 400));
+    }
+
+    user.password = undefined;
+
+    const accessToken = await user.createAccessToken();
+    const refreshToken = await user.createRefreshToken();
+
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      secure: true,
+      sameSite: 'none',
+    });
+
+    res.status(200).json({
+      success: true,
+      user,
+      accessToken,
+    });
   }
 );
 

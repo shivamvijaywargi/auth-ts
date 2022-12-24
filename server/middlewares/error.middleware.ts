@@ -54,10 +54,12 @@ const errorMiddleware = async (
     error.name = err.name;
     error.code = err.code;
 
+    // Validation error
     if (error.name === 'ValidationError') {
       error = handleValidationError(error);
     }
 
+    // Duplicate key error
     if (error.code === 11000) {
       error = handleDuplicateFieldsError(error);
     }
@@ -72,6 +74,13 @@ const errorMiddleware = async (
     // JWT expired Error
     if (error.name === 'TokenExpiredError') {
       const message = `Json Web Token is expired, try again`;
+
+      return new ErrorHandler(message, 400);
+    }
+
+    // Wrong MongoDB ID error
+    if (error.name === 'CastError') {
+      const message = `Resource not found. Invalid ${error.path}`;
 
       return new ErrorHandler(message, 400);
     }
