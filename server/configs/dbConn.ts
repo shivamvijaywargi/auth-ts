@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
 // Set some mongoose defaults :p
-mongoose.set('strictQuery', false);
-mongoose.set('runValidators', true);
+mongoose.set('strictQuery', false); // Not sure what but recommended by Mongoose
+mongoose.set('runValidators', true); // To run validators upon save
 
 // Function to connect to mongodb
 const connectToDB = async () => {

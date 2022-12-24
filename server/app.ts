@@ -7,10 +7,10 @@ import morgan from 'morgan';
 
 const app = express();
 
-// Express Built In Middlewares
+// Middlewares
+// Built In
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 // Third party middlewares
 app.use(cookieParser());
 app.use(
@@ -19,6 +19,6 @@ app.use(
     credentials: true,
   })
 );
-app.use(morgan('dev'));
+app.use(morgan('dev')); // logger
 
 export default app;
