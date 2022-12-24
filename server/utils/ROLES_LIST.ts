@@ -1,0 +1,5 @@
+const ROLES_LIST = {
+  ADMIN: 1555,
+  MODERATOR: 1762,
+  USER: 1981,
+};
