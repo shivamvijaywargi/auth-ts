@@ -6,7 +6,7 @@ import ErrorHandler from '../utils/errorHandler';
 
 /**
  * @SIGNUP
- * @route http://localhost:5000/api/v1/user/register
+ * @route @POST http://localhost:5000/api/v1/user/register
  * @DESCRIPTION User signup controller for creating a user
  **/
 export const registerUser = asyncHandler(
@@ -33,12 +33,18 @@ export const registerUser = asyncHandler(
 
     res.status(201).json({
       success: true,
+      message: 'Registration successful',
       user,
       accessToken,
     });
   }
 );
 
+/**
+ * @LOGIN
+ * @route @POST http://localhost:5000/api/v1/user/login
+ * @DESCRIPTION User login controller for logging in a user
+ **/
 export const loginUser = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
@@ -77,14 +83,30 @@ export const loginUser = asyncHandler(
 
     res.status(200).json({
       success: true,
+      message: 'Login Success',
       user,
       accessToken,
     });
   }
 );
 
+/**
+ * @LOGOUT
+ * @route @GET http://localhost:5000/api/v1/user/logout
+ * @DESCRIPTION User logout controller for logging out a user
+ **/
 export const logoutUser = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
-    res.send('Logout user');
+  async (_req: Request, res: Response, _next: NextFunction) => {
+    res.cookie('token', '', {
+      sameSite: 'none',
+      httpOnly: true,
+      maxAge: 1,
+      secure: true,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Logged out successfully',
+    });
   }
 );
