@@ -3,3 +3,5 @@ const ROLES_LIST = {
   MODERATOR: 1762,
   USER: 1981,
 };
+
+export default ROLES_LIST;

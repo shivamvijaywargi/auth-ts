@@ -2,6 +2,8 @@ import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
+import ROLES_LIST from '../utils/ROLES_LIST';
+
 const userSchema: Schema = new mongoose.Schema({
   name: {
     type: String,
@@ -45,10 +47,12 @@ const userSchema: Schema = new mongoose.Schema({
   isVerified: {
     type: Boolean,
     default: false,
+    required: true,
   },
   isActive: {
     type: Boolean,
     default: false,
+    required: true,
   },
 
   // Maybe move this to Token schema if I create one later
