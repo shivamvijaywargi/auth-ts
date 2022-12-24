@@ -12,7 +12,7 @@ const errorMiddleware = async (
   res.status(statusCode).json({
     success: false,
     message,
-    stack: err.stack,
+    stack: process.env.NODE_ENV === 'development' ? err.stack : null,
   });
 };
 
