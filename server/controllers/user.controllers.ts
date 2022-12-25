@@ -57,16 +57,10 @@ export const loginUser = asyncHandler(
 
     const user = await User.findOne({ email }).select('+password');
 
-    if (!user) {
+    if (!user || !(await user.comparePassword(password))) {
       return next(
         new ErrorHandler('Email and password does not match or exist.', 400)
       );
-    }
-
-    const isPasswordMatched = await user.comparePassword(password);
-
-    if (!isPasswordMatched) {
-      return next(new ErrorHandler('Email and password does not match.', 400));
     }
 
     user.password = undefined;
