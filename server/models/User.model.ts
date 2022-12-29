@@ -31,11 +31,13 @@ const userSchema: Schema = new mongoose.Schema({
     public_id: {
       type: String,
       required: true,
+      // TODO: Complete this later
       default: 'Change later in Schema',
     },
     secure_url: {
       type: String,
       required: true,
+      // TODO: Complete this later
       default: 'Change later in Schema',
     },
   },

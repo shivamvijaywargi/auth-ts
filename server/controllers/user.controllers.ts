@@ -27,8 +27,8 @@ export const registerUser = asyncHandler(
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      secure: true,
-      sameSite: 'none',
+      // secure: true,
+      // sameSite: 'none',
     });
 
     res.status(201).json({
@@ -101,6 +101,23 @@ export const logoutUser = asyncHandler(
     res.status(200).json({
       success: true,
       message: 'Logged out successfully',
+    });
+  }
+);
+
+/**
+ * @VERIFY
+ * @route @GET http://localhost:5000/api/v1/user/verify
+ * @DESCRIPTION Verify the token from req headers
+ **/
+export const verifyUser = asyncHandler(
+  async (req: Request, res: Response, _next: NextFunction) => {
+    console.log(req.user);
+
+    res.status(200).json({
+      success: true,
+      message: 'Verified successfully',
+      user: req.user,
     });
   }
 );
